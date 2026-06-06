@@ -6,8 +6,8 @@ Community-maintained [Unraid](https://unraid.net/) Docker templates for [Scrob](
 
 ## Templates
 
-| Template                                     | Image                          | Description                                   |
-| -------------------------------------------- | ------------------------------ | --------------------------------------------- |
+| Template                                             | Image                          | Description                                   |
+| ---------------------------------------------------- | ------------------------------ | --------------------------------------------- |
 | [scrob-omnibus.xml](scrob-omnibus/scrob-omnibus.xml) | `bellamy/scrob:latest-omnibus` | All-in-one container with embedded PostgreSQL |
 
 ## Quick install (manual)
@@ -16,9 +16,13 @@ Community-maintained [Unraid](https://unraid.net/) Docker templates for [Scrob](
    `/boot/config/plugins/dockerMan/templates-user/my-scrob-omnibus.xml`
 2. In Unraid: **Docker → Add Container → Template** → select **scrob-omnibus**
 3. Set **SECRET_KEY** (`openssl rand -hex 32`), timezone, then **Apply**
-4. Open WebUI on port **7330**, create account, add TMDB API key
+4. Open WebUI on port **7330**, then follow the official [first-run guide](https://github.com/ellite/scrob#first-setup) (create account, TMDB API key, connect media servers, first sync)
 
-Template support: [Unraid forum topic](https://forums.unraid.net/topic/199294-support-jorgen-scrob-omnibus/). Scrob app issues: [ellite/scrob](https://github.com/ellite/scrob/issues).
+Official docs: [scrob.app](https://scrob.app) · [ellite/scrob README](https://github.com/ellite/scrob#getting-started) (includes [omnibus](https://github.com/ellite/scrob#omnibus-single-container) details)
+
+Template support: [Unraid forum topic](https://forums.unraid.net/topic/199294-support-jorgen-scrob-omnibus/).
+
+Scrob app issues: [ellite/scrob](https://github.com/ellite/scrob/issues).
 
 ## License
 
