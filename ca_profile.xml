@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommunityApplications>
+  <Profile>
+    Unraid Docker templates maintained by Jorgen (jorgenjanssonlee). This repository packages third-party applications for Community Applications. Template install, configuration, and Unraid-specific troubleshooting: https://forums.unraid.net/topic/199294-support-jorgen-scrob-omnibus/ — Application bugs and feature requests should go to each app's upstream project, not here.
+  </Profile>
+  <Icon>https://media.invisioncic.com/u329766/monthly_2019_03/people2.thumb.png.38b51e6b3ece06ad52d41b4583c72dd7.png</Icon>
+  <WebPage>https://github.com/jorgenjanssonlee/unraid-scrob</WebPage>
+  <Forum>https://forums.unraid.net/profile/63223-jorgen/</Forum>
+</CommunityApplications>

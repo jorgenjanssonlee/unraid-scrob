@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Container version="2">
+  <Name>scrob-omnibus</Name>
+  <Repository>bellamy/scrob:latest-omnibus</Repository>
+  <Registry>https://hub.docker.com/r/bellamy/scrob/</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://forums.unraid.net/topic/199294-support-jorgen-scrob-omnibus/</Support>
+  <Project>https://github.com/ellite/scrob</Project>
+  <Overview>Self-hosted media tracking for Jellyfin, Plex, and Emby — your private Letterboxd + Trakt. Omnibus image with embedded PostgreSQL (single container).</Overview>
+  <Category>MediaApp:Other Media Server</Category>
+  <WebUI>http://[IP]:[PORT:7330]</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/jorgenjanssonlee/unraid-scrob/main/scrob-omnibus/scrob-omnibus.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/ellite/scrob/main/frontend/public/favicon-96x96.png</Icon>
+  <Changes>Initial release</Changes>
+  <ReadMe>https://raw.githubusercontent.com/jorgenjanssonlee/unraid-scrob/main/README.md</ReadMe>
+  <ExtraSearchTerms>scrob.app jellyfin plex emby trakt letterboxd media tracker</ExtraSearchTerms>
+  <MinVer>6.1</MinVer>
+  <Beta>true</Beta>
+  <ExtraParams>--log-opt max-size=10m --log-opt max-file=3</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Description>Scrob syncs your libraries from Jellyfin, Plex, and Emby, tracks watch history, ratings, and personal lists, and supports webhooks, Radarr/Sonarr requests, and Trakt/Simkl integration.&#xD;&#xA;&#xD;&#xA;This template uses the official omnibus image (bellamy/scrob:latest-omnibus) — PostgreSQL runs inside the container; no separate database container is required.&#xD;&#xA;&#xD;&#xA;HTTPS and PWA install require a reverse proxy (NPM, SWAG, Traefik) in front of port 7330.&#xD;&#xA;&#xD;&#xA;Unraid template support: https://forums.unraid.net/topic/199294-support-jorgen-scrob-omnibus/&#xD;&#xA;Scrob application (bugs, features): https://github.com/ellite/scrob/issues</Description>
+  <Requires/>
+  <Config Name="WebUI Port" Target="7330" Default="7330" Mode="tcp" Description="Scrob web interface" Type="Port" Display="always" Required="true" Mask="false">7330</Config>
+  <Config Name="App Data" Target="/app/backend/data" Default="/mnt/user/appdata/scrob/data" Mode="rw" Description="Scrob application data (settings, uploads)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/scrob/data</Config>
+  <Config Name="PostgreSQL Data" Target="/app/postgres/data" Default="/mnt/user/appdata/scrob/postgres" Mode="rw" Description="Embedded PostgreSQL database (required for omnibus mode)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/scrob/postgres</Config>
+  <Config Name="SECRET_KEY" Target="SECRET_KEY" Default="" Mode="" Description="Required. JWT signing key. Generate with: openssl rand -hex 32" Type="Variable" Display="always" Required="true" Mask="true"/>
+  <Config Name="Timezone" Target="TZ" Default="UTC" Mode="" Description="Container timezone (e.g. Australia/Sydney, Europe/Oslo), Use TZ Identifier from: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" Type="Variable" Display="always" Required="false" Mask="false">UTC</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User ID for file ownership. Unraid default is 99 (nobody)." Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group ID for file ownership. Unraid default is 100 (users)." Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+  <Config Name="Enable Registrations" Target="ENABLE_REGISTRATIONS" Default="true" Mode="" Description="Allow new users to register. Set false after initial setup." Type="Variable" Display="always" Required="false" Mask="false">true</Config>
+  <Config Name="Max Users" Target="REGISTRATION_MAX_ALLOWED_USERS" Default="0" Mode="" Description="Maximum registered users. 0 = unlimited." Type="Variable" Display="always" Required="false" Mask="false">0</Config>
+</Container>
