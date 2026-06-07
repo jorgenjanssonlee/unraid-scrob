@@ -10,11 +10,11 @@
   <Support>https://forums.unraid.net/topic/199294-support-jorgen-scrob-omnibus/</Support>
   <Project>https://github.com/ellite/scrob</Project>
   <Overview>Self-hosted media tracking for Jellyfin, Plex, and Emby — your private Letterboxd + Trakt. Omnibus image with embedded PostgreSQL (single container).</Overview>
-  <Category>MediaApp:Other Media Server</Category>
+  <Category>MediaApp:Other MediaServer:Other</Category>
   <WebUI>http://[IP]:[PORT:7330]</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/jorgenjanssonlee/unraid-scrob/main/scrob-omnibus/scrob-omnibus.xml</TemplateURL>
   <Icon>https://raw.githubusercontent.com/ellite/scrob/main/frontend/public/favicon-96x96.png</Icon>
-  <Changes>Initial release</Changes>
+  <Changes>Initial release&#xD;&#xA;2026-06-07: Fix Category tags (MediaApp:Other MediaServer:Other)</Changes>
   <ReadMe>https://raw.githubusercontent.com/jorgenjanssonlee/unraid-scrob/main/README.md</ReadMe>
   <ExtraSearchTerms>scrob.app jellyfin plex emby trakt letterboxd media tracker</ExtraSearchTerms>
   <MinVer>6.1</MinVer>
