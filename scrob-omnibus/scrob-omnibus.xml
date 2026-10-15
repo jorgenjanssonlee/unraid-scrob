@@ -9,14 +9,14 @@
   <Privileged>false</Privileged>
   <Support>https://forums.unraid.net/topic/199294-support-jorgen-scrob-omnibus/</Support>
   <Project>https://github.com/ellite/scrob</Project>
-  <Overview>Self-hosted media tracking for Jellyfin, Plex, and Emby — your private Letterboxd + Trakt. Omnibus image with embedded PostgreSQL (single container).</Overview>
+  <Overview>Self-hosted media tracking for Jellyfin, Plex, and Emby — your private Letterboxd + Trakt. Omnibus image with embedded PostgreSQL (single container). Optional OpenID Connect SSO (Authelia, Authentik, Keycloak, etc.).</Overview>
   <Category>MediaApp:Other MediaServer:Other</Category>
   <WebUI>http://[IP]:[PORT:7330]</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/jorgenjanssonlee/unraid-scrob/main/scrob-omnibus/scrob-omnibus.xml</TemplateURL>
   <Icon>https://raw.githubusercontent.com/ellite/scrob/main/frontend/public/favicon-96x96.png</Icon>
-  <Changes>Initial release&#xD;&#xA;2026-06-07: Fix Category tags (MediaApp:Other MediaServer:Other)</Changes>
+  <Changes>Initial release&#xD;&#xA;2026-06-07: Fix Category tags (MediaApp:Other MediaServer:Other)&#xD;&#xA;2026-10-16: Add optional OIDC/SSO env vars (incl. OIDC_DISCOVERY_URL) and SERVER_URL</Changes>
   <ReadMe>https://raw.githubusercontent.com/jorgenjanssonlee/unraid-scrob/main/README.md</ReadMe>
-  <ExtraSearchTerms>scrob.app jellyfin plex emby trakt letterboxd media tracker</ExtraSearchTerms>
+  <ExtraSearchTerms>scrob.app jellyfin plex emby trakt letterboxd media tracker oidc sso authelia authentik keycloak</ExtraSearchTerms>
   <MinVer>6.1</MinVer>
   <Beta>true</Beta>
   <ExtraParams>--log-opt max-size=10m --log-opt max-file=3</ExtraParams>
@@ -25,7 +25,7 @@
   <DateInstalled/>
   <DonateText/>
   <DonateLink/>
-  <Description>Scrob syncs your libraries from Jellyfin, Plex, and Emby, tracks watch history, ratings, and personal lists, and supports webhooks, Radarr/Sonarr requests, and Trakt/Simkl integration.&#xD;&#xA;&#xD;&#xA;This template uses the official omnibus image (bellamy/scrob:latest-omnibus) — PostgreSQL runs inside the container; no separate database container is required.&#xD;&#xA;&#xD;&#xA;After the container starts, follow the official first-run guide: https://github.com/ellite/scrob#first-setup (create account, TMDB key, connect Jellyfin/Plex/Emby, first sync). Project site: https://scrob.app&#xD;&#xA;&#xD;&#xA;HTTPS and PWA install require a reverse proxy (NPM, SWAG, Traefik) in front of port 7330.&#xD;&#xA;&#xD;&#xA;Unraid template support: https://forums.unraid.net/topic/199294-support-jorgen-scrob-omnibus/&#xD;&#xA;Scrob application (bugs, features): https://github.com/ellite/scrob/issues</Description>
+  <Description>Scrob syncs your libraries from Jellyfin, Plex, and Emby, tracks watch history, ratings, and personal lists, and supports webhooks, Radarr/Sonarr requests, and Trakt/Simkl integration.&#xD;&#xA;&#xD;&#xA;This template uses the official omnibus image (bellamy/scrob:latest-omnibus) — PostgreSQL runs inside the container; no separate database container is required.&#xD;&#xA;&#xD;&#xA;Optional OpenID Connect SSO: set Enable OIDC / SSO and the OIDC variables below (use your reverse-proxy HTTPS URL for Redirect / Discovery). Prefer OIDC Discovery URL for id_token verification. Full guide: https://github.com/ellite/scrob#oidc--single-sign-on&#xD;&#xA;&#xD;&#xA;After the container starts, follow the official first-run guide: https://github.com/ellite/scrob#first-setup (create account, TMDB key, connect Jellyfin/Plex/Emby, first sync). Project site: https://scrob.app&#xD;&#xA;&#xD;&#xA;HTTPS and PWA install require a reverse proxy (NPM, SWAG, Traefik) in front of port 7330.&#xD;&#xA;&#xD;&#xA;Unraid template support: https://forums.unraid.net/topic/199294-support-jorgen-scrob-omnibus/&#xD;&#xA;Scrob application (bugs, features): https://github.com/ellite/scrob/issues</Description>
   <Requires/>
   <Config Name="WebUI Port" Target="7330" Default="7330" Mode="tcp" Description="Scrob web interface" Type="Port" Display="always" Required="true" Mask="false">7330</Config>
   <Config Name="App Data" Target="/app/backend/data" Default="/mnt/user/appdata/scrob/data" Mode="rw" Description="Scrob application data (settings, uploads)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/scrob/data</Config>
@@ -36,4 +36,17 @@
   <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group ID for file ownership. Unraid default is 100 (users)." Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
   <Config Name="Enable Registrations" Target="ENABLE_REGISTRATIONS" Default="true" Mode="" Description="Allow new users to register. Set false after initial setup." Type="Variable" Display="always" Required="false" Mask="false">true</Config>
   <Config Name="Max Users" Target="REGISTRATION_MAX_ALLOWED_USERS" Default="0" Mode="" Description="Maximum registered users. 0 = unlimited." Type="Variable" Display="always" Required="false" Mask="false">0</Config>
+  <Config Name="Server URL" Target="SERVER_URL" Default="" Mode="" Description="Public HTTPS URL of this Scrob instance (e.g. https://scrob.example.com). Used for email links and OIDC post-logout defaults when behind a reverse proxy." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Enable OIDC / SSO" Target="OIDC_ENABLED" Default="false" Mode="" Description="Enable OpenID Connect login button. Leave false unless you have an IdP configured." Type="Variable" Display="always" Required="false" Mask="false">false</Config>
+  <Config Name="OIDC Discovery URL" Target="OIDC_DISCOVERY_URL" Default="" Mode="" Description="Recommended. IdP OpenID discovery URL — enables id_token verification and stable (issuer, sub) binding. Example: https://auth.example.com/.well-known/openid-configuration" Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="OIDC Provider Name" Target="OIDC_PROVIDER_NAME" Default="SSO" Mode="" Description="Label on the login button (e.g. Authelia, Authentik, Keycloak)." Type="Variable" Display="advanced" Required="false" Mask="false">SSO</Config>
+  <Config Name="OIDC Client ID" Target="OIDC_CLIENT_ID" Default="" Mode="" Description="OAuth/OIDC client id registered at your IdP." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="OIDC Client Secret" Target="OIDC_CLIENT_SECRET" Default="" Mode="" Description="OAuth/OIDC client secret (plaintext). Masked in the UI." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="OIDC Auth URL" Target="OIDC_AUTH_URL" Default="" Mode="" Description="IdP authorization endpoint. Example: https://auth.example.com/api/oidc/authorization" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="OIDC Token URL" Target="OIDC_TOKEN_URL" Default="" Mode="" Description="IdP token endpoint. Example: https://auth.example.com/api/oidc/token" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="OIDC UserInfo URL" Target="OIDC_USERINFO_URL" Default="" Mode="" Description="IdP userinfo endpoint. Example: https://auth.example.com/api/oidc/userinfo" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="OIDC Redirect URL" Target="OIDC_REDIRECT_URL" Default="" Mode="" Description="Must match an IdP redirect URI. Example: https://scrob.example.com/oidc-callback" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="OIDC Scopes" Target="OIDC_SCOPES" Default="openid email profile" Mode="" Description="Space-separated scopes requested from the IdP." Type="Variable" Display="advanced" Required="false" Mask="false">openid email profile</Config>
+  <Config Name="OIDC Auto-create Users" Target="OIDC_AUTO_CREATE_USERS" Default="true" Mode="" Description="Create a Scrob account on first successful SSO login when no matching user exists." Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>
+  <Config Name="OIDC Disable Password Login" Target="OIDC_DISABLE_PASSWORD_LOGIN" Default="false" Mode="" Description="Hide password login and registration; SSO only. Keep false until SSO is verified." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
 </Container>
